@@ -8,8 +8,8 @@ import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.itgirl.library_project.dto.BookCreateDto;
-import ru.itgirl.library_project.dto.BookDto;
+import ru.itgirl.library_project.dto.*;
+import ru.itgirl.library_project.model.Author;
 import ru.itgirl.library_project.model.Book;
 import ru.itgirl.library_project.model.Genre;
 import ru.itgirl.library_project.repository.BookRepository;
@@ -69,12 +69,45 @@ public class BookServiceImpl implements BookService {
                 .build();
     }
 
-    private BookDto convertEntityToDto(Book book) {
+/*    private BookDto convertEntityToDto(Book book) {
         return BookDto.builder()
                 .id(book.getId())
                 .genre(book.getGenre().getName())
                 .name(book.getName())
                 .build();
     }
+    */
+
+    private BookDto convertEntityToDto(Book book) {
+        return BookDto.builder()
+                .id(book.getId())
+                .name(book.getName())
+                .genre(String.valueOf(book.getGenre()))  // передаем объект Genre целиком
+                //.authors(convertAuthorsToDto(book.getAuthors()))  // конвертируем авторов
+                .build();
+    }
+
+    @Override
+    public BookDto updateBook(BookUpdateDto bookUpdateDto) {
+        Book book = bookRepository.findById(bookUpdateDto.getId()).orElseThrow();
+
+
+
+
+
+        book.setName(bookUpdateDto.getName());
+        book.setGenre(bookUpdateDto.getGenreId());
+       // book.setGenre(bookUpdateDto.getGenreId());
+        Book savedBook = bookRepository.save(book);
+        BookDto bookDto = convertEntityToDto(savedBook);
+        return bookDto;
+    }
+
+    @Override
+    public  void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+
 
 }

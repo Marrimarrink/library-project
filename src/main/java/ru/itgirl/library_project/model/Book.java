@@ -32,4 +32,6 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
     private Set<Author> authors;
 
+    public void setGenre(Long genreId) {
+    }
 }
