@@ -17,6 +17,7 @@ import ru.itgirl.library_project.service.AuthorService;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -126,4 +127,10 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.deleteById(id);
     }
 
+    @Override
+    public List<AuthorDto> getAllAuthors() {
+        List<Author> authors = authorRepository.findAll();
+        //return authors.stream().map(author -> convertEntityToDto(author)).collect(Collectors.toList());
+        return authors.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
 }

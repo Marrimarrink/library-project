@@ -1,11 +1,10 @@
-package ru.itgirl.library_project.controller;
+package ru.itgirl.library_project.controller.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.itgirl.library_project.dto.AuthorCreateDto;
 import ru.itgirl.library_project.dto.AuthorDto;
 import ru.itgirl.library_project.dto.AuthorUpdateDto;
-import ru.itgirl.library_project.dto.BookDto;
 import ru.itgirl.library_project.service.AuthorService;
 
 

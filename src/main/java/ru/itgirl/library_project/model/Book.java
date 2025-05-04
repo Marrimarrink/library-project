@@ -33,5 +33,6 @@ public class Book {
     private Set<Author> authors;
 
     public void setGenre(Long genreId) {
+
     }
 }

@@ -1,4 +1,4 @@
-package ru.itgirl.library_project.controller;
+package ru.itgirl.library_project.controller.rest;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

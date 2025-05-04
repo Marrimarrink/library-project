@@ -1,6 +1,5 @@
 package ru.itgirl.library_project.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -9,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.itgirl.library_project.dto.*;
-import ru.itgirl.library_project.model.Author;
 import ru.itgirl.library_project.model.Book;
 import ru.itgirl.library_project.model.Genre;
 import ru.itgirl.library_project.repository.BookRepository;
@@ -17,6 +15,7 @@ import ru.itgirl.library_project.repository.GenreRepository;
 import ru.itgirl.library_project.service.BookService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -91,10 +90,6 @@ public class BookServiceImpl implements BookService {
     public BookDto updateBook(BookUpdateDto bookUpdateDto) {
         Book book = bookRepository.findById(bookUpdateDto.getId()).orElseThrow();
 
-
-
-
-
         book.setName(bookUpdateDto.getName());
         book.setGenre(bookUpdateDto.getGenreId());
        // book.setGenre(bookUpdateDto.getGenreId());
@@ -108,6 +103,10 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
-
+    @Override
+    public List<BookDto> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
 
 }
